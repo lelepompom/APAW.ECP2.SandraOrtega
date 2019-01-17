@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PublicationTest {
-    private Publication publication;
+    private Publication publication =  new Publication("0");
     private List<Reader> readers;
 
     @BeforeEach
@@ -23,26 +22,60 @@ public class PublicationTest {
                         new Reader("Mario", 24)
                 )
                 .collect(Collectors.toList());
-        this.publication = new Publication(true, "Clean Code", "Robert C. Martin", Genre.MATHS, this.readers);
+
+        this.publication.getBook().setTitle("Clean Code");
+    }
+
+    @Test
+    void testId(){
+        assertEquals("0", this.publication.getId());
     }
 
     @Test
     void testSigned() {
+        assertFalse(publication.getSigned());
+    }
+
+    @Test
+    void testSigned2() {
+        this.publication.setSigned(true);
         assertTrue(publication.getSigned());
     }
 
     @Test
     void testBookTitle(){
-        assertEquals("Clean Code", publication.getBook().getTitle());
+        assertEquals("Clean Code", this.publication.getBook().getTitle());
+    }
+
+    @Test
+    void testBookAuthor(){
+        assertEquals("", this.publication.getBook().getAuthor());
     }
 
     @Test
     void testGenre() {
-        assertEquals(Genre.MATHS, publication.getGenre());
+        assertNull(this.publication.getGenre());
+    }
+
+    @Test
+    void testGenre2() {
+        publication.setGenre(Genre.MATHS);
+        assertEquals(Genre.MATHS, this.publication.getGenre());
     }
 
     @Test
     void testReader2Name(){
-        assertEquals("Sonia", publication.getReaders().get(0).getName());
+        publication.setReaders(readers);
+        assertEquals("Sonia", this.publication.getReaders().get(0).getName());
+    }
+
+    @Test
+    void testReadersLength() {
+        assertEquals(0, this.publication.getReaders().size());
+    }
+
+    @Test
+    void testPubliDateYear(){
+        assertEquals(2019, this.publication.getPubliDate().getYear());
     }
 }

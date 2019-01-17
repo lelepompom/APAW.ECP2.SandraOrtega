@@ -4,24 +4,20 @@ public class Feedback {
     private String id;
     private Integer likes;
 
-    public Feedback(String id, Integer likes){
+    public Feedback(String id){
         this.id = id;
-        this.likes = likes;
+        this.likes = 0;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Integer getLikes(){
         return this.likes;
     }
 
-    public void setLikes(Integer likes){
-        this.likes = likes;
+    public void like() {
+        this.likes++;
     }
 }

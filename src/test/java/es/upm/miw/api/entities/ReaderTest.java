@@ -23,4 +23,22 @@ public class ReaderTest {
         assertEquals("25", reader.getAge().toString());
     }
 
+    @Test
+    void testSetName() {
+        reader.setName("Almu");
+        assertEquals("Almu", reader.getName());
+    }
+
+    @Test
+    void testSetAge() {
+        reader.setAge(41);
+        assertEquals("41", reader.getAge().toString());
+    }
+
+    @Test
+    void testId() {
+        reader.setId("1");
+        assertEquals("1", reader.getId());
+    }
+
 }

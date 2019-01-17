@@ -10,12 +10,20 @@ public class Reader {
         this.age = age;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
     public String getName(){
         return this.name;
     }
 
     public Integer getAge(){
         return this.age;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name){

@@ -42,50 +42,14 @@ y la organización de los diferentes tipos de test, con integración continua y 
 * Un PUT : /reader/{id}
 * Un PATCH : /publication/{id}
 * Un DELETE : /reader/{id}
-* Un POST con relación 0..1 : /publication/{id}/genre
-* Un POST con relación 0..n : /feedback
-* Una búsqueda (query) : /publication/search?q=
+* Un POST con relación 0..1 : /publication/genre
+* Un POST con relación 0..n : /publication/{id}/reader
+* Una búsqueda (query) : /publication/search?q==genre:="DESIGN"
 * Realizar dos liberaciones de código para producción, a mitad camino (release-1.0.0) y al final (release-1.1.0)
 
 ***
 
 ## Documentación de la API
-
-### POST /publication
-#### Parámetros del cuerpo
-* `signed`: Boolean (requerido)
-* `genre`: Genre
-* `bookId`: String (requerido)
-#### Respuesta
-* 200 OK
-..* `id`: String
-* 403 BAD REQUEST
-
-
-### POST /publication/{id}/genre
-#### Parámetros del cuerpo
-* `genre`: Genre (requerido)
-#### Respuesta
-* 200 OK
-* 403 BAD REQUEST
-* 404 NOT FOUND
-
-
-### GET /publication/{title}
-#### Respuesta
-* 200 OK
-..* {`id`: String, `title`: String, `author`: String}
-* 404 NOT FOUND
-
-
-### PATCH /publication/{id}
-#### Parámetros del cuerpo
-* `readers`: Reader (requerido)
-#### Respuesta
-* 200 OK
-* 403 BAD REQUEST
-* 404 NOT FOUND
-
 
 ### POST /reader
 #### Parámetros del cuerpo
@@ -112,15 +76,43 @@ y la organización de los diferentes tipos de test, con integración continua y 
 * 404 NOT FOUND
 
 
-### POST /feedback
+### POST /publication
 #### Parámetros del cuerpo
-* `likes`: Integer (requerido)
+* `signed`: Boolean (requerido)
+* `genre`: Genre
+* `title`: String (requerido)
 #### Respuesta
 * 200 OK
+..* `id`: String
 * 403 BAD REQUEST
 
 
-### GET /publication/search?q=
+### POST /publication/{id}/author
+#### Parámetros del cuerpo
+* `author`: String (requerido)
+#### Respuesta
+* 200 OK
+* 403 BAD REQUEST
+* 404 NOT FOUND
+
+
+### GET /publication/{title}
+#### Respuesta
+* 200 OK
+..* {`id`: String, `title`: String, `author`: String}
+* 404 NOT FOUND
+
+
+### PATCH /publication/{id}
+#### Parámetros del cuerpo
+* `readers`: Reader (requerido)
+#### Respuesta
+* 200 OK
+* 403 BAD REQUEST
+* 404 NOT FOUND
+
+
+### GET /publication/search?q=genre:="DESIGN"
 #### Respuesta
 * 200 OK
 ..* {`id`: String, `title`: String, `author`: String}
