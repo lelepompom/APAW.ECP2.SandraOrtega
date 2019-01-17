@@ -1,4 +1,4 @@
-package es.upm.miw;
+package es.upm.miw.api.entities;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

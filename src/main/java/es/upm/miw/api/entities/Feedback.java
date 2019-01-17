@@ -1,4 +1,4 @@
-package es.upm.miw;
+package es.upm.miw.api.entities;
 
 public class Feedback {
     private String id;

@@ -1,4 +1,4 @@
-package es.upm.miw;
+package es.upm.miw.api.entities;
 
 public class Book {
     private String id;

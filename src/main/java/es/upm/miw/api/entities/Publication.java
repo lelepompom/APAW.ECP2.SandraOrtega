@@ -1,4 +1,4 @@
-package es.upm.miw;
+package es.upm.miw.api.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
