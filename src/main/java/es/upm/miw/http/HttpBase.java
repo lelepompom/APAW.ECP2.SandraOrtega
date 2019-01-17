@@ -9,7 +9,7 @@ public class HttpBase {
 
     private Object body;
 
-    public HttpBase() {
+    HttpBase() {
         headerParams = new HashMap<>();
     }
 
@@ -31,14 +31,9 @@ public class HttpBase {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (!headerParams.isEmpty()) {
-            stringBuilder.append("  headerParams=" + headerParams);
-        }
-        if (body != null) {
-            stringBuilder.append(", body=" + body);
-        }
-        return stringBuilder.toString();
+        return "{" +
+                "headerParams:" + headerParams +
+                ", body:" + body +
+                '}';
     }
-
 }

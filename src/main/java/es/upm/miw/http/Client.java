@@ -5,16 +5,10 @@ import org.apache.logging.log4j.Logger;
 
 public class Client {
 
-    private Server server;
-
-    public Client(Server server) {
-        this.server = server;
-    }
-
     public HttpResponse submit(HttpRequest request) {
         Logger logger = LogManager.getLogger(this.getClass());
         logger.info(request.toString());
-        HttpResponse response = this.server.submit(request);
+        HttpResponse response = new Server().submit(request);
         logger.info(response);
         logger.info("---------------------------------------ooo----------------------------------------");
         if (response.getStatus().isError()) {

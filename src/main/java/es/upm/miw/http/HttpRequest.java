@@ -11,10 +11,14 @@ public class HttpRequest extends HttpBase {
 
     private Map<String, String> queryParams;
 
-    public HttpRequest(String path) {
+    public HttpRequest(String path, HttpMethod method) {
         this.path = path;
-        this.method = HttpMethod.GET;
+        this.method = method;
         queryParams = new HashMap<>();
+    }
+
+    public HttpRequest() {
+        this("", HttpMethod.GET);
     }
 
     public static Builder builder(String path) {
@@ -90,7 +94,8 @@ public class HttpRequest extends HttpBase {
         private HttpRequest httpRequest;
 
         private Builder(String path) {
-            this.httpRequest = new HttpRequest(path);
+            this.httpRequest = new HttpRequest();
+            this.httpRequest.path = path;
         }
 
         public Builder path(String path) {

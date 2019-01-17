@@ -1,95 +1,73 @@
 package es.upm.miw.api;
 
+import es.upm.miw.api.daos.DaoFactory;
+import es.upm.miw.api.daos.memory.DaoMemoryFactory;
+import es.upm.miw.api.exceptions.ArgumentNotValidException;
+import es.upm.miw.api.exceptions.NotFoundException;
+import es.upm.miw.api.exceptions.RequestInvalidException;
 import es.upm.miw.http.HttpRequest;
 import es.upm.miw.http.HttpResponse;
 import es.upm.miw.http.HttpStatus;
-import es.upm.miw.http.Server;
 
-public class Dispatcher implements Server {
+public class Dispatcher {
 
-    private static final String PATH_ERROR = "Path Error";
-
-    private static final String METHOD_ERROR = "Method Error";
-
-    private static final String INTEGER_ERROR = "Integer Error";
-
-    public Dispatcher() {
+    static {
+        DaoFactory.setFactory(new DaoMemoryFactory());
     }
 
-    private void responseError(HttpResponse response, String msg) {
-        response.setBody("{\"error\":\"" + msg + "\"}");
-        response.setStatus(HttpStatus.BAD_REQUEST);
-    }
-
-    private void doGet(HttpRequest request, HttpResponse response) {
-        String result;
-        switch (request.getPath()) {
-            case "/path1":
-                // Injectar parámetros...
-                try {
-
-                } catch (Exception e) {
-                    responseError(response, INTEGER_ERROR);
-                }
-                break;
-            case "/path2":
-
-                break;
-            default:
-                responseError(response, PATH_ERROR);
-                break;
+    public void submit(HttpRequest request, HttpResponse response) {
+        String ERROR_MESSAGE = "{'error':'%S'}";
+        try {
+            switch (request.getMethod()) {
+                case POST:
+                    this.doPost(request, response);
+                    break;
+                case GET:
+                    this.doGet(request, response);
+                    break;
+                case PUT:
+                    this.doPut(request);
+                    break;
+                case PATCH:
+                    this.doPatch(request);
+                    break;
+                case DELETE:
+                    this.doDelete(request);
+                    break;
+                default: // Unexpected
+                    throw new RequestInvalidException("method error: " + request.getMethod());
+            }
+        } catch (ArgumentNotValidException | RequestInvalidException exception) {
+            response.setBody(String.format(ERROR_MESSAGE, exception.getMessage()));
+            response.setStatus(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException exception) {
+            response.setBody(String.format(ERROR_MESSAGE, exception.getMessage()));
+            response.setStatus(HttpStatus.NOT_FOUND);
+        } catch (Exception exception) {  // Unexpected
+            exception.printStackTrace();
+            response.setBody(String.format(ERROR_MESSAGE, exception));
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     private void doPost(HttpRequest request, HttpResponse response) {
-        String result;
-        switch (request.getPath()) {
-            case "/path1":
 
-                break;
-            case "/path1/sub":
-
-                break;
-            default:
-                responseError(response, PATH_ERROR);
-                break;
-        }
     }
 
-    private void doPut(HttpRequest request, HttpResponse response) {
-        responseError(response, METHOD_ERROR);
+    private void doGet(HttpRequest request, HttpResponse response) {
+
     }
 
-    private void doPatch(HttpRequest request, HttpResponse response) {
-        responseError(response, METHOD_ERROR);
+    private void doPut(HttpRequest request) {
+
     }
 
-    private void doDelete(HttpRequest request, HttpResponse response) {
-        responseError(response, METHOD_ERROR);
+    private void doPatch(HttpRequest request) {
+
     }
 
-    @Override
-    public HttpResponse submit(HttpRequest request) {
-        HttpResponse response = new HttpResponse();
-        switch (request.getMethod()) {
-            case POST:
-                doPost(request, response);
-                break;
-            case GET:
-                doGet(request, response);
-                break;
-            case PUT:
-                doPut(request, response);
-                break;
-            case PATCH:
-                doPatch(request, response);
-                break;
-            case DELETE:
-                doDelete(request, response);
-                break;
-            default:
-        }
-        return response;
+    private void doDelete(HttpRequest request) {
+
     }
 
 }
