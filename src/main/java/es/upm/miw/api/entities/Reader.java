@@ -26,12 +26,14 @@ public class Reader {
         this.id = id;
     }
 
-    public void setName(String name){
+    public Reader setName(String name){
         this.name = name;
+        return this;
     }
 
-    public void setAge(Integer age){
+    public Reader setAge(Integer age){
         this.age = age;
+        return this;
     }
 
     @Override

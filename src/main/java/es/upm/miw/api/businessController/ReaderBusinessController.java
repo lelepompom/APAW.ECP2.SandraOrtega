@@ -29,8 +29,7 @@ public class ReaderBusinessController {
     public void update(String id, ReaderDto readerDto){
         Reader reader = DaoFactory.getFactory().getReaderDao().read(id)
                 .orElseThrow(() -> new NotFoundException("Reader id: " + id));
-        reader.setName(readerDto.getName());
-        reader.setAge(readerDto.getAge());
+        reader.setName(readerDto.getName()).setAge(readerDto.getAge());
         DaoFactory.getFactory().getReaderDao().save(reader);
     }
 }
