@@ -60,4 +60,16 @@ public class Publication {
     public void setReaders(List<Reader> readers) {
         this.readers = readers;
     }
+
+    @Override
+    public String toString() {
+        return "Publication{" +
+                "id='" + id + '\'' +
+                ", book=" + book +
+                ", signed=" + signed +
+                ", publiDate=" + publiDate +
+                ", genre=" + genre +
+                ", readers=" + readers +
+                '}';
+    }
 }
