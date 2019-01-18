@@ -14,7 +14,8 @@ public class PublicationDto {
         this.title = title;
     }
 
-    public PublicationDto(String title){
+    public PublicationDto(Boolean signed, String title){
+        this.signed = signed;
         this.title = title;
     }
 

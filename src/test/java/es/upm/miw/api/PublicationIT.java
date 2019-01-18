@@ -16,7 +16,7 @@ public class PublicationIT {
 
     private HttpRequest.Builder requestURL = HttpRequest.builder(PublicationApiController.PUBLICATION);
     private PublicationDto publicationDto = new PublicationDto(true, Genre.DESIGN, "Design as art");
-    private PublicationDto publicationDto2 = new PublicationDto(false, null,"Clean Code");
+    private PublicationDto publicationDto2 = new PublicationDto(false, "El principito");
 
     @Test
     void testCreateReader(){

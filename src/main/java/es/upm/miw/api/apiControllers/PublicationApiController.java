@@ -11,7 +11,7 @@ public class PublicationApiController {
 
     private void validate(PublicationDto publicationDto){
         if (publicationDto == null){
-            throw new ArgumentNotValidException("Name is required");
+            throw new ArgumentNotValidException("Title and Signed are required");
         }
     }
 
