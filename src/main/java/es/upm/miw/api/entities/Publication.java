@@ -21,8 +21,21 @@ public class Publication {
         this.readers = new ArrayList<>();
     }
 
+    public Publication(Boolean signed, Genre genre, String title){
+        this.book = new Book();
+        this.book.setTitle(title);
+        this.signed = signed;
+        this.publiDate = LocalDateTime.now();
+        this.genre = genre;
+        this.readers = new ArrayList<>();
+    }
+
     public String getId() {
         return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 
     public Boolean getSigned() {
