@@ -77,7 +77,13 @@ public class Dispatcher {
     }
 
     private void doDelete(HttpRequest request) {
+        switch (request.getPath()){
+            case ReaderApiController.READER:
 
+                break;
+            default:
+                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
     }
 
 }

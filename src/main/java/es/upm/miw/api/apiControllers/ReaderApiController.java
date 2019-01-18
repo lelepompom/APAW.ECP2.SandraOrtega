@@ -6,6 +6,7 @@ import es.upm.miw.api.exceptions.ArgumentNotValidException;
 
 public class ReaderApiController {
     public static final String READER = "/reader";
+    public static final String ID_ID = "/{id}";
 
     private ReaderBusinessController readerBusinessController = new ReaderBusinessController();
 
@@ -18,5 +19,9 @@ public class ReaderApiController {
     public String create(ReaderDto readerDto){
         this.validate(readerDto);
         return this.readerBusinessController.create(readerDto);
+    }
+
+    public void delete(String id){
+        this.readerBusinessController.delete(id);
     }
 }

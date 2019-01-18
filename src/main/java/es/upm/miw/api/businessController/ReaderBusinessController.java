@@ -10,4 +10,8 @@ public class ReaderBusinessController {
         DaoFactory.getFactory().getReaderDao().save(reader);
         return reader.getId();
     }
+
+    public void delete(String id) {
+        DaoFactory.getFactory().getReaderDao().deleteById(id);
+    }
 }
