@@ -2,7 +2,10 @@ package es.upm.miw.api.apiControllers;
 
 import es.upm.miw.api.businessController.ReaderBusinessController;
 import es.upm.miw.api.dtos.ReaderDto;
+import es.upm.miw.api.dtos.ReaderIdNameDto;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
+
+import java.util.List;
 
 public class ReaderApiController {
     public static final String READER = "/reader";
@@ -19,6 +22,10 @@ public class ReaderApiController {
     public String create(ReaderDto readerDto){
         this.validate(readerDto);
         return this.readerBusinessController.create(readerDto);
+    }
+
+    public List<ReaderIdNameDto> readAll(){
+        return this.readerBusinessController.readAll();
     }
 
     public void delete(String id){

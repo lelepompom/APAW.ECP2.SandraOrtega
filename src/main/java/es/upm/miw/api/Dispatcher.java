@@ -65,7 +65,13 @@ public class Dispatcher {
     }
 
     private void doGet(HttpRequest request, HttpResponse response) {
-
+        switch (request.getPath()){
+            case ReaderApiController.READER:
+                response.setBody(this.readerApiController.readAll());
+                break;
+            default:
+                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
     }
 
     private void doPut(HttpRequest request) {
