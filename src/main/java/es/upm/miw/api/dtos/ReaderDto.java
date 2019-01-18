@@ -3,9 +3,9 @@ package es.upm.miw.api.dtos;
 public class ReaderDto {
 
     private String name;
-    private Integer age;
+    private int age;
 
-    public ReaderDto(String name, Integer age){
+    public ReaderDto(String name, int age){
         this.name = name;
         this.age = age;
     }
@@ -22,7 +22,7 @@ public class ReaderDto {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
