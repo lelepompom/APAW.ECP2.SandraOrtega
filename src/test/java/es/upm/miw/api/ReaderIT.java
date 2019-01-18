@@ -16,10 +16,12 @@ public class ReaderIT {
     private HttpRequest.Builder requestURL = HttpRequest.builder(ReaderApiController.READER);
 
     private ReaderDto readerDto = new ReaderDto("Pedro", 48);
+    private ReaderDto readerDto2 = new ReaderDto("Paula", 48);
 
     @Test
     void testCreateReader(){
         new Client().submit(requestURL.body(readerDto).post()).getBody();
+        new Client().submit(requestURL.body(readerDto2).post()).getBody();
     }
 
     @Test
