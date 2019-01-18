@@ -65,12 +65,12 @@ public class Dispatcher {
     }
 
     private void doGet(HttpRequest request, HttpResponse response) {
-        switch (request.getPath()){
-            case ReaderApiController.READER:
-                response.setBody(this.readerApiController.readAll());
-                break;
-            default:
-                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        if (request.isEqualsPath(ReaderApiController.READER)) {
+            response.setBody(this.readerApiController.readAll());
+        } else if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+            response.setBody(this.readerApiController.readAll());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 
@@ -83,12 +83,10 @@ public class Dispatcher {
     }
 
     private void doDelete(HttpRequest request) {
-        switch (request.getPath()){
-            case ReaderApiController.READER:
-
-                break;
-            default:
-                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+            this.readerApiController.delete(request.getPath(1));
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 

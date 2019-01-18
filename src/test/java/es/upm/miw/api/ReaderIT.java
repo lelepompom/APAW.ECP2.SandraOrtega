@@ -13,13 +13,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReaderIT {
 
     private HttpRequest.Builder requestURL = HttpRequest.builder(ReaderApiController.READER);
 
     private ReaderDto readerDto = new ReaderDto("Pedro", 48);
-    private ReaderDto readerDto2 = new ReaderDto("Paula", 48);
+    private ReaderDto readerDto2 = new ReaderDto("Paula");
 
     @Test
     void testCreateReader(){
@@ -35,18 +36,25 @@ public class ReaderIT {
 
     @Test
     void testGetAllReaders(){
+        int readerStartList = ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size();
+
         new Client().submit(requestURL.body(readerDto).post()).getBody();
         new Client().submit(requestURL.body(readerDto2).post()).getBody();
-        assertEquals(2, ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size());
+
+        int readerEndList = ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size();
+        assertTrue(readerStartList < readerEndList);
     }
 
     @Test
     void testDeleteReader(){
-        new Client().submit(requestURL.body(readerDto).post()).getBody();
-        new Client().submit(requestURL.body(readerDto2).post()).getBody();
-        requestURL.path(ReaderApiController.ID_ID).expandPath("2").delete();
-        assertEquals(1, ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size());
-    }
+        int readerStartList = ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size();
 
+        new Client().submit(requestURL.body(readerDto).post()).getBody();
+
+        new Client().submit(requestURL.path(ReaderApiController.ID_ID).expandPath("1").delete());
+
+        int readerEndList = ((List<ReaderIdNameDto>) new Client().submit(requestURL.get()).getBody()).size();
+        assertEquals(readerStartList, readerEndList);
+    }
 
 }
