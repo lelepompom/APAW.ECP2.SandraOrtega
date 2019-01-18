@@ -1,7 +1,9 @@
 package es.upm.miw.api;
 
+import es.upm.miw.api.apiControllers.ReaderApiController;
 import es.upm.miw.api.daos.DaoFactory;
 import es.upm.miw.api.daos.memory.DaoMemoryFactory;
+import es.upm.miw.api.dtos.ReaderDto;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
 import es.upm.miw.api.exceptions.NotFoundException;
 import es.upm.miw.api.exceptions.RequestInvalidException;
@@ -14,6 +16,8 @@ public class Dispatcher {
     static {
         DaoFactory.setFactory(new DaoMemoryFactory());
     }
+
+    private ReaderApiController readerApiController = new ReaderApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
@@ -51,7 +55,11 @@ public class Dispatcher {
     }
 
     private void doPost(HttpRequest request, HttpResponse response) {
-
+        if (request.isEqualsPath(ReaderApiController.READER)) {
+            response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
     }
 
     private void doGet(HttpRequest request, HttpResponse response) {

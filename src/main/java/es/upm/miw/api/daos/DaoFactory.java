@@ -2,7 +2,7 @@ package es.upm.miw.api.daos;
 
 import org.apache.logging.log4j.LogManager;
 
-public class DaoFactory {
+public abstract class DaoFactory {
     private static DaoFactory factory = null;
 
     public static DaoFactory getFactory() {
@@ -15,5 +15,7 @@ public class DaoFactory {
         LogManager.getLogger(DaoFactory.class).debug("   create DaoMemoryFactory");
 
     }
+
+    public abstract ReaderDao getReaderDao();
 
 }

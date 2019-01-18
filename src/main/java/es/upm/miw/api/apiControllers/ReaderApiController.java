@@ -15,7 +15,8 @@ public class ReaderApiController {
         }
     }
 
-    private String create(ReaderDto readerDto){
+    public String create(ReaderDto readerDto){
+        this.validate(readerDto);
         return this.readerBusinessController.create(readerDto);
     }
 }
