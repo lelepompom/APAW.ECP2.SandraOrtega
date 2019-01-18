@@ -75,7 +75,11 @@ public class Dispatcher {
     }
 
     private void doPut(HttpRequest request) {
-
+        if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+            this.readerApiController.update(request.getPath(1), (ReaderDto) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
     }
 
     private void doPatch(HttpRequest request) {

@@ -4,6 +4,7 @@ import es.upm.miw.api.daos.DaoFactory;
 import es.upm.miw.api.dtos.ReaderDto;
 import es.upm.miw.api.dtos.ReaderIdNameDto;
 import es.upm.miw.api.entities.Reader;
+import es.upm.miw.api.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,5 +24,13 @@ public class ReaderBusinessController {
 
     public void delete(String id) {
         DaoFactory.getFactory().getReaderDao().deleteById(id);
+    }
+
+    public void update(String id, ReaderDto readerDto){
+        Reader reader = DaoFactory.getFactory().getReaderDao().read(id)
+                .orElseThrow(() -> new NotFoundException("Reader id: " + id));
+        reader.setName(readerDto.getName());
+        reader.setAge(readerDto.getAge());
+        DaoFactory.getFactory().getReaderDao().save(reader);
     }
 }

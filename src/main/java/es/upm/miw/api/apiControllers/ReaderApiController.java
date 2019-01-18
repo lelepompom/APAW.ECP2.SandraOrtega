@@ -31,4 +31,9 @@ public class ReaderApiController {
     public void delete(String id){
         this.readerBusinessController.delete(id);
     }
+
+    public void update(String id, ReaderDto readerDto){
+        this.validate(readerDto);
+        this.readerBusinessController.update(id, readerDto);
+    }
 }

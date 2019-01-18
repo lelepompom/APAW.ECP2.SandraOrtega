@@ -57,4 +57,24 @@ public class ReaderIT {
         assertEquals(readerStartList, readerEndList);
     }
 
+    @Test
+    void testUpdateReader(){
+        String id = (String) new Client().submit(requestURL.body(new ReaderDto("Francisco Javier", 27)).post()).getBody();
+        new Client().submit(requestURL.path(ReaderApiController.ID_ID).expandPath(id).body(new ReaderDto("Fran")).put()).getBody();
+    }
+
+    @Test
+    void testUpdateNotFoundReader(){
+        HttpRequest request = requestURL.path(ReaderApiController.ID_ID).expandPath("185").body(new ReaderDto("Fran")).put();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request).getBody());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
+    @Test
+    void testUpdateInvalidReader(){
+        String id = (String) new Client().submit(requestURL.body(new ReaderDto("Francisco Javier", 27)).post()).getBody();
+        HttpRequest request = requestURL.path(ReaderApiController.ID_ID).expandPath(id).body(null).put();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request).getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
 }
