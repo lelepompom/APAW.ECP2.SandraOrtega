@@ -14,5 +14,10 @@ public class PublicationApiController {
         }
     }
 
+    public String create(PublicationDto readerDto){
+        this.validate(readerDto);
+        return this.publicationApiController.create(readerDto);
+    }
+
 
 }

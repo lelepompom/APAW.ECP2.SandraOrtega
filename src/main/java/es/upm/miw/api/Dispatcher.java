@@ -1,8 +1,10 @@
 package es.upm.miw.api;
 
+import es.upm.miw.api.apiControllers.PublicationApiController;
 import es.upm.miw.api.apiControllers.ReaderApiController;
 import es.upm.miw.api.daos.DaoFactory;
 import es.upm.miw.api.daos.memory.DaoMemoryFactory;
+import es.upm.miw.api.dtos.PublicationDto;
 import es.upm.miw.api.dtos.ReaderDto;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
 import es.upm.miw.api.exceptions.NotFoundException;
@@ -18,6 +20,7 @@ public class Dispatcher {
     }
 
     private ReaderApiController readerApiController = new ReaderApiController();
+    private PublicationApiController publicationApiController = new PublicationApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
@@ -59,6 +62,8 @@ public class Dispatcher {
             case ReaderApiController.READER:
                 response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
                 break;
+            case PublicationApiController.PUBLICATION:
+                response.setBody(this.publicationApiController.create((PublicationDto) request.getBody()));
             default:
                 throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
