@@ -55,10 +55,12 @@ public class Dispatcher {
     }
 
     private void doPost(HttpRequest request, HttpResponse response) {
-        if (request.isEqualsPath(ReaderApiController.READER)) {
-            response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
-        } else {
-            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        switch (request.getPath()){
+            case ReaderApiController.READER:
+                response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
+                break;
+            default:
+                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 

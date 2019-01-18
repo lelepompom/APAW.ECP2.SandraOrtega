@@ -12,18 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReaderIT {
+
     private HttpRequest.Builder requestURL = HttpRequest.builder(ReaderApiController.READER);
+
+    private ReaderDto readerDto = new ReaderDto("Pedro", 48);
 
     @Test
     void testCreateReader(){
-        HttpRequest request = requestURL.body(new ReaderDto("Pedro", 43)).post();
-        new Client().submit(request).getBody();
+        new Client().submit(requestURL.body(readerDto).post()).getBody();
     }
 
     @Test
     void testCreateInvalidReader(){
-        HttpRequest request = requestURL.body(null).post();
-        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(requestURL.body(null).post()));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
 
