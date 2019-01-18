@@ -25,7 +25,7 @@ public class ReaderIdNameDto {
         return this.name;
     }
 
-    public void setName(String reference) {
+    public void setName(String name) {
         this.name = name;
     }
 

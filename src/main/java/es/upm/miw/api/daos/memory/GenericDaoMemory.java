@@ -18,12 +18,12 @@ public abstract class GenericDaoMemory<T> implements GenericDao<T, String> {
 
     @Override
     public void save(T entity) {
-        String id = this.getId(entity);
-        if (id == null) {
-            id = String.valueOf(this.id++);
-            this.setId(entity, id);
+        String savedId = this.getId(entity);
+        if (savedId == null) {
+            savedId = String.valueOf(this.id++);
+            this.setId(entity, savedId);
         }
-        this.map.put(id, entity);
+        this.map.put(savedId, entity);
         LogManager.getLogger(this.getClass()).debug("   save: " + entity);
     }
 
