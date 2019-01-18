@@ -10,7 +10,7 @@ public class ReaderApiController {
     private ReaderBusinessController readerBusinessController = new ReaderBusinessController();
 
     private void validate(ReaderDto readerDto){
-        if (readerDto.getName() == null){
+        if (readerDto == null){
             throw new ArgumentNotValidException("Name is required");
         }
     }

@@ -13,7 +13,6 @@ public abstract class DaoFactory {
     public static void setFactory(DaoFactory factory) {
         DaoFactory.factory = factory;
         LogManager.getLogger(DaoFactory.class).debug("   create DaoMemoryFactory");
-
     }
 
     public abstract ReaderDao getReaderDao();

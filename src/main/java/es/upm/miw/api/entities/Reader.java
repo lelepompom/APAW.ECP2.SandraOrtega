@@ -33,4 +33,12 @@ public class Reader {
     public void setAge(Integer age){
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                '}';
+    }
 }
