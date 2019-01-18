@@ -58,14 +58,12 @@ public class Dispatcher {
     }
 
     private void doPost(HttpRequest request, HttpResponse response) {
-        switch (request.getPath()){
-            case ReaderApiController.READER:
-                response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
-                break;
-            case PublicationApiController.PUBLICATION:
-                response.setBody(this.publicationApiController.create((PublicationDto) request.getBody()));
-            default:
-                throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        if (request.isEqualsPath(ReaderApiController.READER)) {
+            response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
+        } else if(request.isEqualsPath(PublicationApiController.PUBLICATION)){
+            response.setBody(this.publicationApiController.create((PublicationDto) request.getBody()));
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 

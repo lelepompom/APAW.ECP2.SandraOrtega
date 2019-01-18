@@ -12,21 +12,21 @@ public class Publication {
     private Genre genre;
     private List<Reader> readers;
 
-    public Publication(String id){
-        this.id = id;
-        this.book = new Book();
-        this.signed = false;
-        this.publiDate = LocalDateTime.now();
-        this.genre = null;
-        this.readers = new ArrayList<>();
-    }
-
     public Publication(Boolean signed, Genre genre, String title){
         this.book = new Book();
         this.book.setTitle(title);
         this.signed = signed;
         this.publiDate = LocalDateTime.now();
         this.genre = genre;
+        this.readers = new ArrayList<>();
+    }
+
+    public Publication(String id){
+        this.id = id;
+        this.book = new Book();
+        this.signed = false;
+        this.publiDate = LocalDateTime.now();
+        this.genre = null;
         this.readers = new ArrayList<>();
     }
 
