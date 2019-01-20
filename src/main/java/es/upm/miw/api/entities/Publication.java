@@ -74,6 +74,10 @@ public class Publication {
         this.readers = readers;
     }
 
+    public void setReader(Reader reader) {
+        this.readers.add(reader);
+    }
+
     @Override
     public String toString() {
         return "Publication{" +

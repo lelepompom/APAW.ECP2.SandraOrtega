@@ -1,6 +1,7 @@
 package es.upm.miw.api;
 
 import es.upm.miw.api.dtos.PublicationDto;
+import es.upm.miw.api.dtos.ReaderDto;
 import es.upm.miw.api.entities.Genre;
 import es.upm.miw.http.Client;
 import es.upm.miw.http.HttpException;
@@ -115,6 +116,27 @@ public class PublicationIT {
                 ).getBody()
         );
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+
+    }
+
+    @Test
+    void testUpdateReader(){
+        String readerId = (String) new Client().submit(HttpRequest.builder(Routes.READER)
+                .body(new ReaderDto("Pedro", 48))
+                .post()
+        ).getBody();
+
+        String publicationId = (String) new Client().submit(requestURL
+                .body(new PublicationDto(true, Genre.ART, "Quijote"))
+                .post()
+        ).getBody();
+
+        new Client().submit(requestURL
+                .path(Routes.ID_ID)
+                .expandPath(publicationId)
+                .body(readerId)
+                .patch()
+        ).getBody();
 
     }
 

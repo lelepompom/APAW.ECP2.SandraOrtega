@@ -3,6 +3,7 @@ package es.upm.miw.api.apiControllers;
 import es.upm.miw.api.businessController.PublicationBusinessController;
 import es.upm.miw.api.dtos.PublicationDto;
 import es.upm.miw.api.entities.Publication;
+import es.upm.miw.api.entities.Reader;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
 
 public class PublicationApiController {
@@ -35,5 +36,10 @@ public class PublicationApiController {
     public Publication readPublication(String title){
         this.validate(title);
         return this.publicationBusinessController.readPublication(title);
+    }
+
+    public void updateReader(String publicationId, String readerId){
+        this.validate(readerId);
+        this.publicationBusinessController.updateReader(publicationId, readerId);
     }
 }

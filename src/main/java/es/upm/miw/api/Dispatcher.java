@@ -6,6 +6,7 @@ import es.upm.miw.api.daos.DaoFactory;
 import es.upm.miw.api.daos.memory.DaoMemoryFactory;
 import es.upm.miw.api.dtos.PublicationDto;
 import es.upm.miw.api.dtos.ReaderDto;
+import es.upm.miw.api.entities.Reader;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
 import es.upm.miw.api.exceptions.NotFoundException;
 import es.upm.miw.api.exceptions.RequestInvalidException;
@@ -90,7 +91,11 @@ public class Dispatcher {
     }
 
     private void doPatch(HttpRequest request) {
-
+        if (request.isEqualsPath(Routes.PUBLICATION + Routes.ID_ID)) {
+            this.publicationApiController.updateReader(request.getPath(1), (String) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
     }
 
     private void doDelete(HttpRequest request) {
