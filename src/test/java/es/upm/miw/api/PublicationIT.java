@@ -19,7 +19,7 @@ public class PublicationIT {
     private PublicationDto publicationDto2 = new PublicationDto(false, "El principito");
 
     @Test
-    void testCreateReader(){
+    void testCreatePublication(){
         new Client().submit(requestURL.body(publicationDto).post()).getBody();
         new Client().submit(requestURL.body(publicationDto2).post()).getBody();
     }
@@ -28,5 +28,43 @@ public class PublicationIT {
     void testCreateNullBody(){
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(requestURL.body(null).post()));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
+
+    @Test
+    void createAuthor(){
+        String id = (String) new Client().submit(requestURL.body(publicationDto).post()).getBody();
+        new Client().submit(requestURL
+                .path(PublicationApiController.ID_ID).expandPath(id)
+                .path(PublicationApiController.AUTHOR)
+                .body("Bruno Munari")
+                .post());
+    }
+
+
+    @Test
+    void createAuthorPublicationNotFound(){
+        HttpException exception = assertThrows(HttpException.class, () ->
+                new Client().submit(requestURL
+                        .path(PublicationApiController.ID_ID).expandPath("734")
+                        .path(PublicationApiController.AUTHOR)
+                        .body("Bruno Munari")
+                        .post())
+        );
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+
+    }
+
+    @Test
+    void createAuthorBadRequest(){
+        String id = (String) new Client().submit(requestURL.body(publicationDto).post()).getBody();
+        HttpException exception = assertThrows(HttpException.class, () ->
+                new Client().submit(requestURL
+                        .path(PublicationApiController.ID_ID).expandPath(id)
+                        .path(PublicationApiController.AUTHOR)
+                        .body(null)
+                        .post())
+        );
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+
     }
 }

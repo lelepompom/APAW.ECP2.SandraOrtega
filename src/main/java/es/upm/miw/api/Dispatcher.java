@@ -62,6 +62,8 @@ public class Dispatcher {
             response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
         } else if(request.isEqualsPath(PublicationApiController.PUBLICATION)){
             response.setBody(this.publicationApiController.create((PublicationDto) request.getBody()));
+        } else if (request.isEqualsPath(PublicationApiController.PUBLICATION + PublicationApiController.ID_ID + PublicationApiController.AUTHOR)) {
+            this.publicationApiController.createAuthor(request.getPath(1), (String) request.getBody());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
