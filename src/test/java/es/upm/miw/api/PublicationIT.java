@@ -16,7 +16,7 @@ public class PublicationIT {
     private HttpRequest.Builder requestURL = HttpRequest.builder(Routes.PUBLICATION);
 
     private PublicationDto publicationDto = new PublicationDto(true, Genre.DESIGN, "Design as art");
-    private PublicationDto publicationDto2 = new PublicationDto(false, "El principito");
+    private PublicationDto publicationDto2 = new PublicationDto(false, "Yerma");
 
     @Test
     void testCreatePublication(){
@@ -79,4 +79,29 @@ public class PublicationIT {
         );
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
+
+    @Test
+    void readTitle(){
+        new Client().submit(requestURL
+                .body(publicationDto)
+                .post()
+        );
+
+        new Client().submit(requestURL
+                .path(Routes.TITLE).expandPath("Design as art")
+                .get()
+        ).getBody();
+    }
+
+    @Test
+    void readTitleNotFound(){
+        HttpException exception = assertThrows(HttpException.class, () ->
+                new Client().submit(requestURL
+                        .path(Routes.TITLE).expandPath("734")
+                        .get()
+            ).getBody()
+        );
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
 }

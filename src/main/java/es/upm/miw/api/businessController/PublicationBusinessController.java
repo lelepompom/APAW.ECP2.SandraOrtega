@@ -2,8 +2,12 @@ package es.upm.miw.api.businessController;
 
 import es.upm.miw.api.daos.DaoFactory;
 import es.upm.miw.api.dtos.PublicationDto;
+import es.upm.miw.api.dtos.PublicationIdTitleDto;
 import es.upm.miw.api.entities.Publication;
 import es.upm.miw.api.exceptions.NotFoundException;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PublicationBusinessController {
     public String create(PublicationDto publicationDto){
@@ -17,5 +21,18 @@ public class PublicationBusinessController {
                 .orElseThrow(()-> new NotFoundException("Publication (" + publicationId + ")"));
         publication.getBook().setAuthor(author);
         DaoFactory.getFactory().getPublicationDao().save(publication);
+    }
+
+    public Publication readPublication(String title){
+        String publicationId = this.findPublicationId(title);
+        return DaoFactory.getFactory().getPublicationDao().read(publicationId)
+                .orElseThrow(()-> new NotFoundException("Publication (" + publicationId + ")"));
+    }
+
+    private String findPublicationId(String title){
+        Map<String, String> publicationMap = DaoFactory.getFactory().getPublicationDao().findAll()
+                .stream().map(PublicationIdTitleDto::new)
+                .collect(Collectors.toMap(publication -> publication.getTitle(), publication -> publication.getId()));
+        return publicationMap.get(title);
     }
 }

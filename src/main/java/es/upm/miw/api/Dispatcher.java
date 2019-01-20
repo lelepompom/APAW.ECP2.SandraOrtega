@@ -74,6 +74,8 @@ public class Dispatcher {
             response.setBody(this.readerApiController.readAll());
         } else if (request.isEqualsPath(Routes.READER + Routes.ID_ID)) {
             response.setBody(this.readerApiController.readAll());
+        } else if (request.isEqualsPath(Routes.PUBLICATION + Routes.TITLE)) {
+            response.setBody(this.publicationApiController.readPublication(request.getPath(1)));
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
