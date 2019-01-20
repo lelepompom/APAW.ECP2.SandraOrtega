@@ -15,8 +15,15 @@ public class PublicationApiController {
         }
     }
 
+    private void validateNewTitle(String title){
+        if (this.publicationBusinessController.getTitlesMap().containsKey(title)){
+            throw new ArgumentNotValidException("Title already exists");
+        }
+    }
+
     public String create(PublicationDto publicationDto){
         this.validate(publicationDto);
+        this.validateNewTitle(publicationDto.getTitle());
         return this.publicationBusinessController.create(publicationDto);
     }
 

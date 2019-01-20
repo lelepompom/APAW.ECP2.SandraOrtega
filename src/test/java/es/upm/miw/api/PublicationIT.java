@@ -17,16 +17,14 @@ public class PublicationIT {
 
     private PublicationDto publicationDto = new PublicationDto(true, Genre.DESIGN, "Design as art");
     private PublicationDto publicationDto2 = new PublicationDto(false, "Yerma");
+    private PublicationDto publicationDto3 = new PublicationDto(false, Genre.MATHS, "El principito");
+    private PublicationDto publicationDto4 = new PublicationDto(true, Genre.ART, "¿Cómo nacen los objetos?");
+    private PublicationDto publicationDto5 = new PublicationDto(true, Genre.ART, "Picasso");
 
     @Test
     void testCreatePublication(){
         new Client().submit(requestURL
                 .body(publicationDto)
-                .post()
-        );
-
-        new Client().submit(requestURL
-                .body(publicationDto2)
                 .post()
         );
     }
@@ -43,7 +41,7 @@ public class PublicationIT {
     @Test
     void createAuthor(){
         String id = (String) new Client().submit(requestURL
-                .body(publicationDto)
+                .body(publicationDto2)
                 .post())
                 .getBody()
         ;
@@ -69,7 +67,7 @@ public class PublicationIT {
 
     @Test
     void createAuthorBadRequest(){
-        String id = (String) new Client().submit(requestURL.body(publicationDto).post()).getBody();
+        String id = (String) new Client().submit(requestURL.body(publicationDto3).post()).getBody();
         HttpException exception = assertThrows(HttpException.class, () ->
                 new Client().submit(requestURL
                         .path(Routes.ID_ID).expandPath(id)
@@ -83,12 +81,12 @@ public class PublicationIT {
     @Test
     void readTitle(){
         new Client().submit(requestURL
-                .body(publicationDto)
+                .body(publicationDto4)
                 .post()
         );
 
         new Client().submit(requestURL
-                .path(Routes.TITLE).expandPath("Design as art")
+                .path(Routes.TITLE).expandPath("¿Cómo nacen los objetos?")
                 .get()
         ).getBody();
     }
@@ -102,6 +100,22 @@ public class PublicationIT {
             ).getBody()
         );
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
+    @Test
+    void testCreateSamePublication(){
+        new Client().submit(requestURL
+                .body(publicationDto5)
+                .post()
+        );
+        HttpException exception = assertThrows(HttpException.class, () ->
+                new Client().submit(requestURL
+                        .body(publicationDto5)
+                        .post()
+                ).getBody()
+        );
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+
     }
 
 }

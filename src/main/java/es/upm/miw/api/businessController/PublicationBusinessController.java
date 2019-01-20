@@ -13,6 +13,7 @@ public class PublicationBusinessController {
     public String create(PublicationDto publicationDto){
         Publication publication = new Publication(publicationDto.getSigned(), publicationDto.getGenre(), publicationDto.getTitle());
         DaoFactory.getFactory().getPublicationDao().save(publication);
+
         return publication.getId();
     }
 
@@ -24,15 +25,15 @@ public class PublicationBusinessController {
     }
 
     public Publication readPublication(String title){
-        String publicationId = this.findPublicationId(title);
+        String publicationId = this.getTitlesMap().get(title);
+
         return DaoFactory.getFactory().getPublicationDao().read(publicationId)
                 .orElseThrow(()-> new NotFoundException("Publication (" + publicationId + ")"));
     }
 
-    private String findPublicationId(String title){
-        Map<String, String> publicationMap = DaoFactory.getFactory().getPublicationDao().findAll()
+    public Map<String, String> getTitlesMap(){
+        return DaoFactory.getFactory().getPublicationDao().findAll()
                 .stream().map(PublicationIdTitleDto::new)
                 .collect(Collectors.toMap(publication -> publication.getTitle(), publication -> publication.getId()));
-        return publicationMap.get(title);
     }
 }
