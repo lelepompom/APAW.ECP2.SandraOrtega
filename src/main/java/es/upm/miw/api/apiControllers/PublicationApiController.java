@@ -5,9 +5,6 @@ import es.upm.miw.api.dtos.PublicationDto;
 import es.upm.miw.api.exceptions.ArgumentNotValidException;
 
 public class PublicationApiController {
-    public static final String PUBLICATION = "/publication";
-    public static final String ID_ID = "/{id}";
-    public static final String AUTHOR = "/author";
 
     private PublicationBusinessController publicationBusinessController = new PublicationBusinessController();
 

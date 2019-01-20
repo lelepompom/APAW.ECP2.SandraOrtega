@@ -58,11 +58,11 @@ public class Dispatcher {
     }
 
     private void doPost(HttpRequest request, HttpResponse response) {
-        if (request.isEqualsPath(ReaderApiController.READER)) {
+        if (request.isEqualsPath(Routes.READER)) {
             response.setBody(this.readerApiController.create((ReaderDto) request.getBody()));
-        } else if(request.isEqualsPath(PublicationApiController.PUBLICATION)){
+        } else if(request.isEqualsPath(Routes.PUBLICATION)){
             response.setBody(this.publicationApiController.create((PublicationDto) request.getBody()));
-        } else if (request.isEqualsPath(PublicationApiController.PUBLICATION + PublicationApiController.ID_ID + PublicationApiController.AUTHOR)) {
+        } else if (request.isEqualsPath(Routes.PUBLICATION + Routes.ID_ID + Routes.AUTHOR)) {
             this.publicationApiController.createAuthor(request.getPath(1), (String) request.getBody());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
@@ -70,9 +70,9 @@ public class Dispatcher {
     }
 
     private void doGet(HttpRequest request, HttpResponse response) {
-        if (request.isEqualsPath(ReaderApiController.READER)) {
+        if (request.isEqualsPath(Routes.READER)) {
             response.setBody(this.readerApiController.readAll());
-        } else if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+        } else if (request.isEqualsPath(Routes.READER + Routes.ID_ID)) {
             response.setBody(this.readerApiController.readAll());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
@@ -80,7 +80,7 @@ public class Dispatcher {
     }
 
     private void doPut(HttpRequest request) {
-        if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+        if (request.isEqualsPath(Routes.READER + Routes.ID_ID)) {
             this.readerApiController.update(request.getPath(1), (ReaderDto) request.getBody());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
@@ -92,7 +92,7 @@ public class Dispatcher {
     }
 
     private void doDelete(HttpRequest request) {
-        if (request.isEqualsPath(ReaderApiController.READER + ReaderApiController.ID_ID)) {
+        if (request.isEqualsPath(Routes.READER + Routes.ID_ID)) {
             this.readerApiController.delete(request.getPath(1));
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());

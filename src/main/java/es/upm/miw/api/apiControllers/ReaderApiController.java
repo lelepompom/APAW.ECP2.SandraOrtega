@@ -8,8 +8,6 @@ import es.upm.miw.api.exceptions.ArgumentNotValidException;
 import java.util.List;
 
 public class ReaderApiController {
-    public static final String READER = "/reader";
-    public static final String ID_ID = "/{id}";
 
     private ReaderBusinessController readerBusinessController = new ReaderBusinessController();
 
